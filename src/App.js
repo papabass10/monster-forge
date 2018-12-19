@@ -1,25 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Nav from './components/Nav'
+import Home from './components/Home'
+import Create from './components/Create'
 import './App.css';
 
+const initialState = {
+	route: 'home',	
+}
 class App extends Component {
+	constructor(){
+		super();
+		this.state = initialState;
+	}
+
+	onRouteChange = (newRoute) => {
+		this.setState({route: newRoute});
+	}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+				<header>
+					<p className="ma0">
+						<Nav onRouteChange={this.onRouteChange} />
+					</p>
+				</header>
+				<body style={{backgroundColor: '#7D0103'}}>
+					{ this.state.route === 'home' ? 
+						<div>
+							<p className='mt0'>
+								<Home />
+							</p>
+						</div> :  this.state.route === 'create' ?
+						<div>
+							<p className='mt0'>
+								<Create />
+							</p> 
+						</div> : 
+						<div>
+							<p className='mt0'>Search Page</p>
+						</div>}
+				</body>
       </div>
     );
   }
